@@ -8,10 +8,11 @@ const postDriver = async(req, res) => {
         if( !name || !surname || !description || !image || !nationality|| !dob) {
             return res.status(400).send("faltan datos")
         } else {
-            const driver = await Driver.findOrCreate({
-                where:{name, surname, description, image, nationality, dob }
-            })
+            const driver = await Driver.findOrCreate({where: {name, surname, description, image, nationality, dob }})
+            //description, image, nationality, dob }
             return res.status(200).send("Driver creado con exito")
+            console.log(driver);
+            // return res.status(200).json(driver)
           }
   
           // FALTA TEAMS
