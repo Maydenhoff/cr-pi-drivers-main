@@ -1,51 +1,32 @@
 const axios = require("axios");
 const { Team } = require("../db");
+const { parseTeams } = require("../utils/parseTeams");
 
 const getTeams = async (req, res) => {
   try {
-    const {data} = (await axios.get("http://localhost:5000/drivers"));
+    const { data } = await axios.get("http://localhost:5000/drivers");
     console.log(data);
-    let teamsArray = []
+    const array = []
     for (let i = 0; i < data.length; i++) {
-      if(data[i].teams) {
-        let team = data[i].teams?.split(",")
-        for (let j= 0; j<team.length; j++) {
-          let currentTeam = team[j].trim()
-          console.log(currentTeam);
-              await Team.findOrCreate({where: {name: currentTeam}});
-              if(!teamsArray.includes(currentTeam)) {
-                teamsArray.push(currentTeam)
+      if (data[i].teams) {
+        let t = parseTeams(data[i].teams);
+        for (let j = 0; j < t.length; j++) {
+          console.log(t[j]);
+          await Team.findOrCreate({ where: { name: t[j] } });
+
+          if(!array.includes(t[j])) {
+            array.push(t[j])
+          } 
         }
       }
     }
-        // console.log(team);
 
-      // if (peticion[i].teams) {
-      //   console.log(peticion[i].teams);
-      //   let team = peticion[i].teams?.trim()
-      //   team = peticion[i].teams?.split(",");
-      //   console.log(team);
-      //   for (let j = 0; j < team.length; j++) {
-      //     let currentTeam = team[j] 
-      //     if(currentTeam[0] === " ")  {
-      //       currentTeam = currentTeam.slice(1)
-      //     }
-
-      //     await Team.findOrCreate({where: {name: currentTeam}});
-      //     if(!teamsArray.includes(currentTeam)) {
-      //       teamsArray.push(currentTeam)
-
-      //     }
-      //   }
-      // }
-    }
-      return res.status(200).json(teamsArray)
+    return res.status(200).json(array);
   } catch (error) {
     return res.status(500).send(error.message);
   }
-    
-
 };
+
 module.exports = {
   getTeams,
 };

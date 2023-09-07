@@ -1,4 +1,4 @@
-import { FILTER_BY_TEAMS, GET_DRIVERS, GET_TEAMS, ORDER_ALFABETICAMENTE, ORDER_FECHA_NACIMIENTO, SEARCH_BY_ID, SEARCH_BY_NAME } from "./action-type"
+import { FILTER_BY_ORIGEN, FILTER_BY_TEAMS, GET_DRIVERS, GET_TEAMS, ORDER_ALFABETICAMENTE, ORDER_FECHA_NACIMIENTO, SEARCH_BY_ID, SEARCH_BY_NAME } from "./action-type"
 import axios from "axios"
 
 export const getDrivers = () => {
@@ -86,4 +86,12 @@ export const orderFechaNacimiento = (orden) => {
 export const filterByTeams = (team) => {
     return {type: FILTER_BY_TEAMS, payload: team}
 }
+
+export const filterByOrigen = (origen) => {
+    return {
+        type: FILTER_BY_ORIGEN,
+        payload: origen
+    }
+}
+FILTER_BY_ORIGEN
 // SEARCH_BY_NAME

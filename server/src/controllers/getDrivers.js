@@ -1,5 +1,6 @@
 const axios = require("axios");
 const { Driver } = require("../db");
+const { parseTeams } = require("../utils/parseTeams.js")
 
 const getDrivers = async (req, res) => {
   try {
@@ -12,7 +13,7 @@ const getDrivers = async (req, res) => {
         image: data[i].image,
         dob: data[i].dob,
         nationality: data[i].nationality,
-        teams: data[i].teams,
+        teams: data[i].teams ? parseTeams(data[i].teams) : [],
         description: data[i].description,
       };
 
