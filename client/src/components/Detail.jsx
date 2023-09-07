@@ -17,10 +17,13 @@ const Detail = () => {
             {detail ?
                 (
             <div>
+                <h1>{`${detail.name?.forename} ${detail.name?.surname}`}</h1>
                 <img src={detail.image?.url} alt={detail.imageby} />
-                <h1>{detail.name?.forename}</h1>
+                
                 <h2>{detail.dob}</h2>
                 <h2>{detail.nationality}</h2>
+                <h2>{detail.description}</h2>
+                {/* <h3>{detail.teams}</h3> */}
                     </div>
                 )
                 : null}

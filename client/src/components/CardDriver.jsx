@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-const CardDriver = ({id, image, name,teams }) => {
+const CardDriver = ({id, image, name,teams,dob }) => {
     return (
         <div>
             <Link to={`/driver/${id}`}>
@@ -8,6 +8,7 @@ const CardDriver = ({id, image, name,teams }) => {
             <img src={image.url} alt={image.imageby} />
             <h2>{name.forename}</h2>
             <h2>{teams}</h2>
+            <h2>{dob}</h2>
             {/* <h2>{teams}</h2> */}
             </Link>
 

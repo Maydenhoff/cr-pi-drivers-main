@@ -1,4 +1,4 @@
-import { GET_DRIVERS, SEARCH_BY_ID, SEARCH_BY_NAME } from "./action-type"
+import { FILTER_BY_TEAMS, GET_DRIVERS, GET_TEAMS, ORDER_ALFABETICAMENTE, ORDER_FECHA_NACIMIENTO, SEARCH_BY_ID, SEARCH_BY_NAME } from "./action-type"
 import axios from "axios"
 
 export const getDrivers = () => {
@@ -6,7 +6,7 @@ export const getDrivers = () => {
         const endpoint = "http://localhost:3001/drivers"
         return async (dispatch) => {
             const { data } = await axios.get(endpoint)
-            console.log(data);
+            // console.log(data);
             return dispatch({
                 type: GET_DRIVERS,
                 payload: data
@@ -42,8 +42,9 @@ export const searchByName = (name) => {
         const endpoint = `http://localhost:3001/drivers/name?name=${name}`
         return async(dispatch) => {
             const { data } = await axios.get(endpoint)
-            console.log(data);
-            if(data.name) {
+            console.log("lo q buscoi",data)
+
+            if(data) {
                 return dispatch({
                     type: SEARCH_BY_NAME,
                     payload: data
@@ -53,5 +54,36 @@ export const searchByName = (name) => {
     } catch (error) {
         console.log(error.message);
     }
+}
+
+export const getTeams = () => {
+    try {
+        const endpoint = "http://localhost:3001/teams"
+        return async(dispatch) => {
+            const { data } = await axios.get(endpoint)
+            // console.log(data);
+            return dispatch({
+                type:GET_TEAMS,
+                payload:data
+            })
+        }
+    } catch (error) {
+        
+    }
+    
+
+}
+
+export const orderAlfabeticamente = (orden) => {
+    return { type: ORDER_ALFABETICAMENTE, payload: orden}
+}
+
+
+export const orderFechaNacimiento = (orden) => {
+    return {type: ORDER_FECHA_NACIMIENTO, payload: orden}
+}
+
+export const filterByTeams = (team) => {
+    return {type: FILTER_BY_TEAMS, payload: team}
 }
 // SEARCH_BY_NAME
