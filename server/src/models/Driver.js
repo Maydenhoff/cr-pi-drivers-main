@@ -15,11 +15,6 @@ module.exports = (sequelize) => {
                     type: DataTypes.STRING,
                     allowNull: false
 
-                },
-
-                surname: {
-                    type: DataTypes.STRING,
-                    allowNull: false  
             },
             description:{
                 type: DataTypes.STRING,
@@ -40,9 +35,6 @@ module.exports = (sequelize) => {
                 type: DataTypes.DATE,
                 allowNull: false
                 
-            },
-            teams: {
-                type: DataTypes.STRING
             }
         }, { timestamps: false }
     )

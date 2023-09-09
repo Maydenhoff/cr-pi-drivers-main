@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { filterByOrigen, filterByTeams, getDrivers, getTeams, orderAlfabeticamente, orderFechaNacimiento, searchByName } from "../Redux/action"
 import CardDriver from "./CardDriver"
 import Paginacion from "./Paginacion"
+import { Link } from "react-router-dom"
 
 
 
@@ -55,6 +56,7 @@ const Home = () => {
     const handleOrigen = (event) => {
         console.log(event.target.value);
         dispatch(filterByOrigen(event.target.value))
+        setPagina(1)
     }
 
     useEffect(() => {
@@ -69,6 +71,9 @@ const Home = () => {
             <div>
 
                 <SearchBar handleSubmit={handleSubmit} handleChange={handleChange} />
+                <Link to={"/creardriver"}>
+                    <button>CREAR DRIVER</button>
+                </Link>
                 <select onChange={handleOrder}>
                     <option value="nombreAscendente">Nombre(ascendente)</option>
                     <option value="nombreDescendiente">Nombre(descendente)</option>

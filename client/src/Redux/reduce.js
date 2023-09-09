@@ -1,5 +1,6 @@
 import { searchById } from "./action";
 import {
+  CREATE_NEW_DRIVER,
   FILTER_BY_ORIGEN,
   FILTER_BY_TEAMS,
   GET_DRIVERS,
@@ -50,13 +51,13 @@ const reduce = (state = initialState, action) => {
           action.payload === "nombreAscendente"
             ? copyDrivers.sort(
                 (a, b) =>
-                  a.name.forename.toLowerCase().charCodeAt(0) -
-                  b.name.forename.toLowerCase().charCodeAt(0)
+                  a.name.toLowerCase().charCodeAt(0) -
+                  b.name.toLowerCase().charCodeAt(0)
               )
             : copyDrivers.sort(
                 (a, b) =>
-                  b.name.forename.toLowerCase().charCodeAt(0) -
-                  a.name.forename.toLowerCase().charCodeAt(0)
+                  b.name.toLowerCase().charCodeAt(0) -
+                  a.name.toLowerCase().charCodeAt(0)
               ),
       };
     case ORDER_FECHA_NACIMIENTO:
@@ -84,8 +85,9 @@ const reduce = (state = initialState, action) => {
       };
     case FILTER_BY_TEAMS:
       let copyDriver = state.allDrivers;
+      console.log(copyDriver[0].teams);
       let filtrados = copyDriver.filter((e) =>
-        e.teams.includes(action.payload)
+        e.teams?.includes(action.payload)
       );
       console.log(filtrados);
       return {
@@ -94,11 +96,26 @@ const reduce = (state = initialState, action) => {
       };
     case FILTER_BY_ORIGEN:
         let copyDriver2 = state.allDrivers;
-        console.log(copyDriver2);
-        if(action.payload === "API") {
-            copyDriver2.map((e) => console.log(typeof e.id))
-            // copyDriver2.filter((e) =>)
+        // console.log(copyDriver2);
+      console.log(typeof copyDriver2[508].id);
+      let fil
+      console.log(copyDriver2[1].image);
+      if(action.payload === "API") {
+        fil = copyDriver2.filter((e)=> typeof e.image !== "string")
+        console.log("aprete api", action.payload);
+    } else if(action.payload === "creados") {
+        fil = copyDriver2.filter((e)=> typeof e.image !== "object")
+        console.log("aprete creados", action.payload);
+        
+      } else fil = state.allDrivers
+
+   console.log(fil);
+        return {
+            ...state,
+            drivers: fil
         }
+
+      // case CREATE_NEW_DRIVER:
 
     default:
       return { ...state };

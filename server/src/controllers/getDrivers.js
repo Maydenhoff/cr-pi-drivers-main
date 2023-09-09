@@ -9,7 +9,7 @@ const getDrivers = async (req, res) => {
     for (let i = 0; i < data.length; i++) {
       const driver = {
         id: data[i].id,
-        name: data[i].name,
+        name: `${data[i].name.forename} ${data[i].name.surname}`,
         image: data[i].image,
         dob: data[i].dob,
         nationality: data[i].nationality,
@@ -25,6 +25,7 @@ const getDrivers = async (req, res) => {
       drivers.push(driver);
     }
     const driverDataBase = await Driver.findAll();
+    console.log(driverDataBase);
 
     return res.status(200).json([...drivers, ...driverDataBase]);
   } catch (error) {

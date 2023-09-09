@@ -1,20 +1,31 @@
 const axios = require("axios");
-const { Driver } = require("../db");
+const { Driver, Team } = require("../db");
 
 
 const postDriver = async(req, res) => {
     try {
-        const { name, surname, description, image, nationality, dob } = req.body;
-        if( !name || !surname || !description || !image || !nationality|| !dob) {
+        const { name, surname, description, image, nationality, dob, teams } = req.body;
+        if( !name || !surname || !description || !image || !nationality|| !dob || !teams || !teams.length) {
             return res.status(400).send("faltan datos")
-        } else {
-            const driver = await Driver.findOrCreate({where: {name, surname, description, image, nationality, dob }})
+        }  
+            
+        
+        let driver = await Driver.create({name:`${name} ${surname}`, description, image, nationality, dob })
             //description, image, nationality, dob }
-            return res.status(200).send("Driver creado con exito")
+        teams.map( async(e) => {
+          let foundTeam = await Team.findOne({where: {name:e}})
+          console.log(foundTeam, e, driver);
+          await driver.addTeam(foundTeam)
+        })
+
+            return res.status(200).json(driver)
+
+          
             console.log(driver);
             // return res.status(200).json(driver)
-          }
-  
+          
+
+          
           // FALTA TEAMS
       
     } catch (error) {

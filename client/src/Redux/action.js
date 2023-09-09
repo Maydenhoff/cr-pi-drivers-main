@@ -53,6 +53,8 @@ export const searchByName = (name) => {
         }
     } catch (error) {
         console.log(error.message);
+        
+        
     }
 }
 
@@ -68,10 +70,26 @@ export const getTeams = () => {
             })
         }
     } catch (error) {
+        console.log(error.message);
         
     }
     
-
+    
+}
+export const createNewDriver = (driver) => {
+    try {
+        console.log("enttre");
+        console.log(driver);
+        const endpoint = "http://localhost:3001/drivers"
+        return async(dispatch) => {
+            const {data}  = await axios.post(endpoint, driver)
+            console.log(data);
+        }
+    } catch (error) {
+        
+        console.log(error.message);
+    }
+    
 }
 
 export const orderAlfabeticamente = (orden) => {
@@ -93,5 +111,6 @@ export const filterByOrigen = (origen) => {
         payload: origen
     }
 }
+
 FILTER_BY_ORIGEN
 // SEARCH_BY_NAME
