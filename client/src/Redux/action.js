@@ -1,6 +1,25 @@
-import { FILTER_BY_ORIGEN, FILTER_BY_TEAMS, GET_DRIVERS, GET_TEAMS, ORDER_ALFABETICAMENTE, ORDER_FECHA_NACIMIENTO, SEARCH_BY_ID, SEARCH_BY_NAME } from "./action-type"
+import { CREATE_NEW_DRIVER, FILTER_BY_ORIGEN, FILTER_BY_TEAMS, GET_DRIVERS, GET_TEAMS, ORDER_ALFABETICAMENTE, ORDER_FECHA_NACIMIENTO, SEARCH_BY_ID, SEARCH_BY_NAME } from "./action-type"
 import axios from "axios"
 
+export const createNewDriver = (driver) => {
+    try {
+        console.log("enttre");
+        console.log(driver);
+        const endpoint = "http://localhost:3001/drivers"
+        return async(dispatch) => {
+            const {data}  = await axios.post(endpoint, driver)
+            console.log(data);
+            return dispatch({
+                type:CREATE_NEW_DRIVER,
+                payload: data
+            })
+        }
+    } catch (error) {
+        
+        console.log(error.message);
+    }
+    
+}
 export const getDrivers = () => {
     try {
         const endpoint = "http://localhost:3001/drivers"
@@ -74,21 +93,6 @@ export const getTeams = () => {
         
     }
     
-    
-}
-export const createNewDriver = (driver) => {
-    try {
-        console.log("enttre");
-        console.log(driver);
-        const endpoint = "http://localhost:3001/drivers"
-        return async(dispatch) => {
-            const {data}  = await axios.post(endpoint, driver)
-            console.log(data);
-        }
-    } catch (error) {
-        
-        console.log(error.message);
-    }
     
 }
 

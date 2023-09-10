@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { searchByName } from "../Redux/action";
+import { searchByName } from "../../Redux/action";
 import { useDispatch, useSelector } from "react-redux";
 
 const SearchBar = ({handleChange, handleSubmit}) => {

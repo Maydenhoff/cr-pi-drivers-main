@@ -1,4 +1,3 @@
-import { searchById } from "./action";
 import {
   CREATE_NEW_DRIVER,
   FILTER_BY_ORIGEN,
@@ -95,27 +94,32 @@ const reduce = (state = initialState, action) => {
         drivers: filtrados,
       };
     case FILTER_BY_ORIGEN:
-        let copyDriver2 = state.allDrivers;
-        // console.log(copyDriver2);
+      let copyDriver2 = state.allDrivers;
+      // console.log(copyDriver2);
       console.log(typeof copyDriver2[508].id);
-      let fil
+      let fil;
       console.log(copyDriver2[1].image);
-      if(action.payload === "API") {
-        fil = copyDriver2.filter((e)=> typeof e.image !== "string")
+      if (action.payload === "API") {
+        fil = copyDriver2.filter((e) => typeof e.image !== "string");
         console.log("aprete api", action.payload);
-    } else if(action.payload === "creados") {
-        fil = copyDriver2.filter((e)=> typeof e.image !== "object")
+      } else if (action.payload === "creados") {
+        fil = copyDriver2.filter((e) => typeof e.image !== "object");
         console.log("aprete creados", action.payload);
-        
-      } else fil = state.allDrivers
+      } else fil = state.allDrivers;
 
-   console.log(fil);
-        return {
-            ...state,
-            drivers: fil
-        }
+      console.log(fil);
+      return {
+        ...state,
+        drivers: fil,
+      };
 
-      // case CREATE_NEW_DRIVER:
+    case CREATE_NEW_DRIVER:
+      
+      return {
+        ...state,
+        drivers: [...state.drivers, action.payload],
+        allDrivers: [...state.allDrivers, action.payload],
+      };
 
     default:
       return { ...state };

@@ -4,24 +4,23 @@ const { Driver, Team } = require("../db");
 
 const postDriver = async(req, res) => {
     try {
-        const { name, surname, description, image, nationality, dob, teams } = req.body;
-        if( !name || !surname || !description || !image || !nationality|| !dob || !teams || !teams.length) {
+        const { name, surname, description, image, nationality, dob, team } = req.body;
+        if( !name || !surname || !description || !image || !nationality|| !dob || !team || !team.length) {
             return res.status(400).send("faltan datos")
-        }  
-            
+        } 
         
         let driver = await Driver.create({name:`${name} ${surname}`, description, image, nationality, dob })
             //description, image, nationality, dob }
-        teams.map( async(e) => {
+        team.map( async(e) => {
           let foundTeam = await Team.findOne({where: {name:e}})
-          console.log(foundTeam, e, driver);
+          console.log(foundTeam);
           await driver.addTeam(foundTeam)
         })
 
+        console.log("esyo" , driver);
             return res.status(200).json(driver)
 
           
-            console.log(driver);
             // return res.status(200).json(driver)
           
 

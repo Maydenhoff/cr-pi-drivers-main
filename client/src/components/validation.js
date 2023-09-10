@@ -55,7 +55,7 @@ const validation = (event, setErrors) => {
     }
   }
 
-  if ((event.name === "dob")) {
+  if (event.name === "dob") {
     const fecha = new Date(event.value)
     console.log(fecha);
     const fechaHoy = new Date();
@@ -72,6 +72,18 @@ const validation = (event, setErrors) => {
             return { ...prevValue, dob: "" };
           });
     }
+}
+
+if( event.name === "description") {
+  if(event.value.length < 50) {
+    setErrors((prevValue) => {
+      return {...prevValue, description: "Debe tener al menos 50 caracteres"}
+    })
+  } else {
+    setErrors((prevValue) => {
+      return {...prevValue, description: ""}
+    })
+  }
 }
 };
 

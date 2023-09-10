@@ -1,10 +1,11 @@
-import SearchBar from "./SearchBar"
+import style from "./Home.module.css"
+import SearchBar from "../SearchBar/SearchBar"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { filterByOrigen, filterByTeams, getDrivers, getTeams, orderAlfabeticamente, orderFechaNacimiento, searchByName } from "../Redux/action"
-import CardDriver from "./CardDriver"
-import Paginacion from "./Paginacion"
+import { filterByOrigen, filterByTeams, getDrivers, getTeams, orderAlfabeticamente, orderFechaNacimiento, searchByName } from "../../Redux/action"
+import CardDriver from "../Card/CardDriver"
+import Paginacion from "../Paginacion"
 import { Link } from "react-router-dom"
 
 
@@ -67,7 +68,7 @@ const Home = () => {
 
 
     return (
-        <div>
+        <div >
             <div>
 
                 <SearchBar handleSubmit={handleSubmit} handleChange={handleChange} />
@@ -102,39 +103,42 @@ const Home = () => {
 
             </div>
 
+<div className={style.container}>
+
             {drivers
                 ? drivers.slice((pagina - 1) * porPagina, (pagina - 1) * porPagina + porPagina)
-                    .map((driver) => {
-                        return (
-                            <CardDriver
-                                key={driver.id}
-                                id={driver.id}
-                                image={driver.image}
-                                name={driver.name}
-                                teams={driver.teams}
-                                dob={driver.dob}
-
-                            />
+                .map((driver) => {
+                    return (
+                        <CardDriver
+                        key={driver.id}
+                        id={driver.id}
+                        image={driver.image}
+                        name={driver.name}
+                        teams={driver.teams}
+                        dob={driver.dob}
+                        
+                        />
                         )
                     })
-                : window.alert("No hay cartas")
-            }
+                    : window.alert("No hay cartas")
+                }
             <Paginacion pagina={pagina} setPagina={setPagina} maximo={maximo} />
             {/* {
-            drivers.map((driver) => {
-                return (
-                    <CardDriver 
-                    key= {driver.id}
-                    id= {driver.id}
-                    image= {driver.image} 
-                    name= {driver.name}
-                    teams = {driver.teams}
-                    
-                    />
-                    )
-                }) 
-            } */}
+                drivers.map((driver) => {
+                    return (
+                        <CardDriver 
+                        key= {driver.id}
+                        id= {driver.id}
+                        image= {driver.image} 
+                        name= {driver.name}
+                        teams = {driver.teams}
+                        
+                        />
+                        )
+                    }) 
+                } */}
 
+                </div>
         </div>
     )
 }

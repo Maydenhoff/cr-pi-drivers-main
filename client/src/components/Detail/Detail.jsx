@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
-import { searchById } from "../Redux/action"
+import { searchById } from "../../Redux/action"
 
 const Detail = () => {
    const dispatch = useDispatch() 

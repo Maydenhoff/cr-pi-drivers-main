@@ -1,11 +1,13 @@
 import { useDispatch, useSelector } from "react-redux"
-import { createNewDriver, getTeams } from "../Redux/action"
+import { createNewDriver, getTeams } from "../../Redux/action"
 import { useEffect, useState } from "react"
-import validation from "./validation"
+import { useNavigate } from "react-router-dom"
+import validation from "../validation"
 
 const CrearDriver = () => {
     const dispatch = useDispatch()
     const teams = useSelector((state) => state.teams)
+    const navigate = useNavigate()
     const [userData, setUserData] = useState({
         name: "",
         surname: "",
@@ -13,6 +15,7 @@ const CrearDriver = () => {
         image: "",
         dob: "",
         team: [],
+        description: ""
 
     })
 
@@ -22,6 +25,7 @@ const CrearDriver = () => {
         nationality: "",
         image: "",
         dob: "",
+        description: ""
     })
 
 
@@ -36,8 +40,6 @@ const CrearDriver = () => {
                 
             } else {
 
-                
-                
                 setUserData({ ...userData, [event.target.name]: event.target.value })
                 console.log(event.target.name);
                 // validation(event.target, setErrors)
@@ -49,12 +51,14 @@ const CrearDriver = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        if (!userData.name.length || !userData.surname.length || !userData.nationality.length || !userData.image.length || !userData.dob.length) {
+        if (!userData.name.length || !userData.surname.length || !userData.nationality.length || !userData.image.length || !userData.dob.length || !userData.description.length) {
             window.alert("Falta info rey")
         } else {
-            if (!errors.name.length && !errors.surname.length && !errors.nationality.length && !errors.image.length && !errors.dob.length) {
+            if (!errors.name.length && !errors.surname.length && !errors.nationality.length && !errors.image.length && !errors.dob.length && !errors.description.length) {
                 // window.alert("TODO OK")
                 dispatch(createNewDriver(userData))
+                navigate("/home")
+                return 
 
             } else {
                 window.alert("Hay errores")
@@ -73,7 +77,7 @@ const CrearDriver = () => {
 
         <div>
             <p>{JSON.stringify(errors)}</p>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} >
 
                 <label>Nombre:</label>
                 <input name="name" onChange={handleChange} />
@@ -97,6 +101,11 @@ const CrearDriver = () => {
 
                 <label>Fecha de nacimiento:</label>
                 <input type="date" name="dob" onChange={handleChange} />
+
+                <br />
+                
+                <label>Descripcion: </label>
+                <textarea name="description" onChange={handleChange}></textarea>
 
                 <br />
 
