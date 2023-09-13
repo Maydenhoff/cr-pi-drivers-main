@@ -25,7 +25,7 @@ const getDrivers = async (req, res) => {
       drivers.push(driver);
     }
     const driverDataBase = await Driver.findAll();
-    console.log(driverDataBase);
+
 
     return res.status(200).json([...drivers, ...driverDataBase]);
   } catch (error) {

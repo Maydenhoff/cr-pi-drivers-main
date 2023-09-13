@@ -1,15 +1,35 @@
-/* .input {
+.contenedor {
+  position: relative; /* Debe tener una posición relativa */
+  width: 100%;
+  height: 12vh; /* Ajusta la altura del contenedor principal según tus necesidades */
+}
+
+
+.div {
+  /* background-color: red; */
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%); 
+  text-align: center;
+  width: 100%; 
+
+}
+
+.input {
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
     font-weight: 500;
     font-size: 14px;
+    width: 230px;
+    height: 30px;
     color: #fff;
-    background-color: rgb(28,28,30);
+    background-color:  #033454;
     box-shadow: 0 0 .4vw rgba(0,0,0,0.5), 0 0 0 .15vw transparent;
-    border-radius: 0.4vw;
+    border-radius: 1.0vw;
     border: none;
     outline: none;
     padding: 0.4vw;
-    max-width: 190px;
+    max-width: 550px;
     transition: .4s;
   }
   
@@ -24,22 +44,22 @@
 
   .btn {
     appearance: none;
-    background-color: black;
-    border: 0.125em solid #1A1A1A;
-    border-radius: 0.5em; 
+    background-color:  #033454; /* Cambié el color de fondo a negro */
+    border: 0.125em solid  black;
+    border-radius: 0.5em; /* Reduje el valor del border-radius */
     box-sizing: border-box;
-    color: white; /
+    color: white; /* Cambié el color del texto a blanco */
     cursor: pointer;
     display: inline-block;
     font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    font-size: 14px; 
+    font-size: 14px; /* Reduje el font-size para hacerlo más compacto */
     font-weight: 600;
     line-height: normal;
     margin: 0;
-    min-height: 2.5em;
+    min-height: 2.5em; /* Reduje el valor del min-height */
     min-width: 0;
     outline: none;
-    padding: 0.7em 1.5em; 
+    padding: 0.7em 1.5em; /* Ajusté los valores de padding */
     text-align: center;
     text-decoration: none;
     transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
@@ -55,7 +75,7 @@
 
 .btn:hover {
     color: white; 
-    background-color: rgb(32, 32, 32);
+    background-color:  #0c4c76;
     box-shadow: rgba(0, 0, 0, 0.099) 0 6px 10px; 
     transform: translateY(-2px);
 }
@@ -63,5 +83,4 @@
 .btn:active {
     box-shadow: none;
     transform: translateY(0);
-} 
-*/
+}

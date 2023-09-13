@@ -1,8 +1,8 @@
-import { CREATE_NEW_DRIVER, FILTER_BY_ORIGEN, FILTER_BY_TEAMS, GET_DRIVERS, GET_TEAMS, ORDER_ALFABETICAMENTE, ORDER_FECHA_NACIMIENTO, SEARCH_BY_ID, SEARCH_BY_NAME } from "./action-type"
+import { CREATE_NEW_DRIVER, DELETE_DRIVER, FILTER_BY_ORIGEN, FILTER_BY_TEAMS, GET_DRIVERS, GET_TEAMS, ORDER_ALFABETICAMENTE, ORDER_FECHA_NACIMIENTO, SEARCH_BY_ID, SEARCH_BY_NAME } from "./action-type"
 import axios from "axios"
 
 export const createNewDriver = (driver) => {
-    try {
+
         console.log("enttre");
         console.log(driver);
         const endpoint = "http://localhost:3001/drivers"
@@ -14,14 +14,10 @@ export const createNewDriver = (driver) => {
                 payload: data
             })
         }
-    } catch (error) {
-        
-        console.log(error.message);
-    }
     
 }
 export const getDrivers = () => {
-    try {
+   
         const endpoint = "http://localhost:3001/drivers"
         return async (dispatch) => {
             const { data } = await axios.get(endpoint)
@@ -31,14 +27,14 @@ export const getDrivers = () => {
                 payload: data
              })
             }
-    } catch (error) {
-        console.log("estoy rompiendo el dispacth");
-    }
+
+
+  
    
 }
 
 export const searchById = (id) => {
-    try {
+
         const endpoint = `http://localhost:3001/drivers/${id}`
         return async(dispatch) => {
             const { data } = await axios.get(endpoint)
@@ -50,13 +46,13 @@ export const searchById = (id) => {
                 })
             }
         }
-    } catch (error) {
-        console.log(error.message);
-    }
+
+
+    
 }
 
 export const searchByName = (name) => {
-    try {
+
         console.log("action", name);
         const endpoint = `http://localhost:3001/drivers/name?name=${name}`
         return async(dispatch) => {
@@ -70,15 +66,14 @@ export const searchByName = (name) => {
                 })
             }
         }
-    } catch (error) {
-        console.log(error.message);
+
+
         
-        
-    }
+
 }
 
 export const getTeams = () => {
-    try {
+
         const endpoint = "http://localhost:3001/teams"
         return async(dispatch) => {
             const { data } = await axios.get(endpoint)
@@ -88,14 +83,22 @@ export const getTeams = () => {
                 payload:data
             })
         }
-    } catch (error) {
-        console.log(error.message);
-        
-    }
+
     
     
 }
 
+export const deleteDriver = (id) => {
+    const endpoint = `http://localhost:3001/drivers/${id}`
+    return async(dispatch) => {
+        const { data } = await axios.delete(endpoint)
+        console.log("aca",data);
+        return dispatch({
+            type: DELETE_DRIVER,
+            payload: data
+        })
+    }
+}
 export const orderAlfabeticamente = (orden) => {
     return { type: ORDER_ALFABETICAMENTE, payload: orden}
 }
@@ -110,11 +113,13 @@ export const filterByTeams = (team) => {
 }
 
 export const filterByOrigen = (origen) => {
+    console.log("entre");
     return {
         type: FILTER_BY_ORIGEN,
         payload: origen
     }
 }
 
-FILTER_BY_ORIGEN
+
+// FILTER_BY_ORIGEN
 // SEARCH_BY_NAME

@@ -7,6 +7,7 @@ import { filterByOrigen, filterByTeams, getDrivers, getTeams, orderAlfabeticamen
 import CardDriver from "../Card/CardDriver"
 import Paginacion from "../Paginacion"
 import { Link } from "react-router-dom"
+import Nav from "../Nav/Nav"
 
 
 
@@ -17,7 +18,6 @@ const Home = () => {
     const teams = useSelector((state) => state.teams)
     const dispatch = useDispatch()
     const [cards, setCards] = useState([])
-    const driverForName = useSelector((state) => state.driverForName)
 
     //paginado
     const [pagina, setPagina] = useState(1)
@@ -40,88 +40,46 @@ const Home = () => {
 
     }
 
-    const handleOrder = (event) => {
-        dispatch(orderAlfabeticamente(event.target.value))
-        // console.log(event.target.value);
-    }
-
-    const handleFechaOrder = (event) => {
-        dispatch(orderFechaNacimiento(event.target.value))
-    }
-
-    const handleTeam = (event) => {
-        console.log(event.target.value);
-        dispatch(filterByTeams(event.target.value))
-    }
-
-    const handleOrigen = (event) => {
-        console.log(event.target.value);
-        dispatch(filterByOrigen(event.target.value))
-        setPagina(1)
-    }
-
     useEffect(() => {
-        dispatch(getDrivers())
         dispatch(getTeams())
+        if(!drivers.length) {
+            dispatch(getDrivers())
+
+        }
 
     }, [dispatch])
 
 
     return (
         <div >
-            <div>
+            <div className={style.div}>
 
                 <SearchBar handleSubmit={handleSubmit} handleChange={handleChange} />
-                <Link to={"/creardriver"}>
-                    <button>CREAR DRIVER</button>
-                </Link>
-                <select onChange={handleOrder}>
-                    <option value="nombreAscendente">Nombre(ascendente)</option>
-                    <option value="nombreDescendiente">Nombre(descendente)</option>
-                </select>
-                <select onChange={handleFechaOrder}>
-                    <option value="fechaAscendente">Fecha de Nacimiento(ascendente)</option>
-                    <option value="fechaDescendiente">Fecha de Nacimiento(descendente)</option>
-                </select>
-                <select onChange={handleTeam}>
-                    {teams.map((team) => {
-                        return (
-                            <option value={team}>{team}</option>
-                        )
-                    })}
-                </select>
-                <select onChange={handleOrigen}>
-                    <option value="allDrivers">All Drivers</option>
-                    <option value="creados">Creados</option>
-                    <option value="API">API</option>
-                </select>
-                {/* <select onchange={handleOrigen}>
-                    <option value="allDrivers">All Drivers</option>
-                    <option value="creados">Creados</option>
-                    <option value="API">API</option>
-                </select> */}
+                <Nav setPagina={setPagina} />
+
 
             </div>
 
-<div className={style.container}>
+            <div className={style.divCard}>
 
-            {drivers
-                ? drivers.slice((pagina - 1) * porPagina, (pagina - 1) * porPagina + porPagina)
-                .map((driver) => {
-                    return (
-                        <CardDriver
-                        key={driver.id}
-                        id={driver.id}
-                        image={driver.image}
-                        name={driver.name}
-                        teams={driver.teams}
-                        dob={driver.dob}
-                        
-                        />
-                        )
-                    })
+                {drivers
+                    ? drivers.slice((pagina - 1) * porPagina, (pagina - 1) * porPagina + porPagina)
+                        .map((driver) => {
+                            return (
+                                <CardDriver
+                                    key={driver.id}
+                                    id={driver.id}
+                                    image={driver.image}
+                                    name={driver.name}
+                                    teams={driver.teams}
+                                    dob={driver.dob}
+
+                                />
+                            )
+                        })
                     : window.alert("No hay cartas")
                 }
+            </div>
             <Paginacion pagina={pagina} setPagina={setPagina} maximo={maximo} />
             {/* {
                 drivers.map((driver) => {
@@ -138,7 +96,6 @@ const Home = () => {
                     }) 
                 } */}
 
-                </div>
         </div>
     )
 }

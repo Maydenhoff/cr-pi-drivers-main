@@ -32,7 +32,7 @@ module.exports = (sequelize) => {
                 
             },
             dob: {
-                type: DataTypes.DATE,
+                type: DataTypes.DATEONLY,
                 allowNull: false
                 
             }

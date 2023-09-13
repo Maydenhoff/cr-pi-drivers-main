@@ -1,5 +1,6 @@
 import {
   CREATE_NEW_DRIVER,
+  DELETE_DRIVER,
   FILTER_BY_ORIGEN,
   FILTER_BY_TEAMS,
   GET_DRIVERS,
@@ -96,7 +97,6 @@ const reduce = (state = initialState, action) => {
     case FILTER_BY_ORIGEN:
       let copyDriver2 = state.allDrivers;
       // console.log(copyDriver2);
-      console.log(typeof copyDriver2[508].id);
       let fil;
       console.log(copyDriver2[1].image);
       if (action.payload === "API") {
@@ -120,7 +120,13 @@ const reduce = (state = initialState, action) => {
         drivers: [...state.drivers, action.payload],
         allDrivers: [...state.allDrivers, action.payload],
       };
-
+      
+      case DELETE_DRIVER: 
+      return {
+        drivers: action.payload,
+        allDrivers:  action.payload,
+        
+      }
     default:
       return { ...state };
   }

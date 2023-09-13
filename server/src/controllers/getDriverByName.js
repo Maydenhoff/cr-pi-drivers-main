@@ -2,38 +2,35 @@ const axios = require("axios");
 const { Driver } = require("../db");
 
 const getDriverByName = async (req, res) => {
-    let { name } = req.query;
-    name = name.toLowerCase();
-    name = name[0].toUpperCase() + name.slice(1, name.length);
-    try {
-      console.log(name);
-      const drivers = await axios.get(
-        `http://localhost:5000/drivers?name.forename=${name}`
-      )
-      
-      if(drivers.data.length > 16) { //cambio a 2 por ej
-          let firstDrivers = drivers.data.slice(0, 15);
-          return res.status(200).json(firstDrivers)
-      } else {
-          console.log(drivers.data.length);
-          const restantes = 15- drivers.data.length
-          console.log(restantes);
-  
-          const driverDataBase = await Driver.findAll({where: {name: name}, limit: restantes})
-  
-          console.log(driverDataBase);
-          
-          // const total = drivers.data + driverDataBase 
-  
-          return res.status(200).json([...drivers.data,...driverDataBase])
-          // return res.status(200).json(driverDataBase)
-      }
-    } catch (error) {
-      res.status(500).send(error.message);
-    }
-  }
-  
+  let { name } = req.query;
+  name = name.toLowerCase();
+  name = name[0].toUpperCase() + name.slice(1, name.length);
+  try {
+    const { data } = await axios.get(`http://localhost:3001/drivers`);
+    // console.log(data);
 
-  module.exports = {
-    getDriverByName
+    const filterData = data.filter((e) => {
+      let arrayName = e.name.split(" ");
+
+      return arrayName[0] === name;
+    });
+
+    if(!filterData.length) {
+      console.log("aca");
+      return res.status(200).send("No se encontraron drivers con ese nombre")
+    }
+    if (filterData.length > 16) {
+      let firstDrivers = filterData.slice(0, 15);
+      return res.status(200).json(firstDrivers);
+    } else {
+      return res.status(200).json(filterData);
+    }
+ 
+  } catch (error) {
+    res.status(500).send(error.message);
   }
+};
+
+module.exports = {
+  getDriverByName,
+};

@@ -85,6 +85,15 @@ if( event.name === "description") {
     })
   }
 }
+
+// if(event.name === "team") {
+//   console.log("aca", event.value);
+//     if(event.value) {
+//       setErrors((prevValue) => {
+//         return {...prevValue, team: ""}
+//       })
+//     }
+// }
 };
 
 export default validation;

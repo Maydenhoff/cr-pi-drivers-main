@@ -8,24 +8,17 @@ const postDriver = async(req, res) => {
         if( !name || !surname || !description || !image || !nationality|| !dob || !team || !team.length) {
             return res.status(400).send("faltan datos")
         } 
-        
-        let driver = await Driver.create({name:`${name} ${surname}`, description, image, nationality, dob })
-            //description, image, nationality, dob }
+        let driver = await Driver.create({name:`${name} ${surname}`, description, image, nationality, dob})
+
+      
         team.map( async(e) => {
-          let foundTeam = await Team.findOne({where: {name:e}})
-          console.log(foundTeam);
+          foundTeam = await Team.findAll({where: {name:e}})
           await driver.addTeam(foundTeam)
         })
-
-        console.log("esyo" , driver);
-            return res.status(200).json(driver)
-
+        
           
-            // return res.status(200).json(driver)
-          
+            return res.status(200).json({...driver.dataValues, team: team})
 
-          
-          // FALTA TEAMS
       
     } catch (error) {
       return  res.status(500).json(error.message)
