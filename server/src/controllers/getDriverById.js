@@ -1,11 +1,12 @@
 const axios = require("axios");
 const { Driver } = require("../db");
+const getAllDrivers = require("../utils/getDriversUtil");
 
 const getDriverById = async (req, res) => {
   console.log("estoy aca");
   const { idDriver } = req.params;
   try {
-    const { data } = await axios.get(`http://localhost:3001/drivers`);
+    const data = await getAllDrivers()
 
     const findData = data.find((e) => {
       return e.id == idDriver;

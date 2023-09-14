@@ -115,7 +115,7 @@ const reduce = (state = initialState, action) => {
     case DELETE_DRIVER:
       return {
         ...state,
-        drivers: action.payload,
+        drivers: [...state.drivers.filter((e) => e.id !== action.payload.id)],
         allDrivers: action.payload,
       };
     case REINICIAR_DETAIL:

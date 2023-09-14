@@ -1,12 +1,14 @@
 const axios = require("axios");
 const { Driver } = require("../db");
+const getAllDrivers = require("../utils/getDriversUtil");
 
 const getDriverByName = async (req, res) => {
   let { name } = req.query;
   name = name.toLowerCase();
   name = name[0].toUpperCase() + name.slice(1, name.length);
   try {
-    const { data } = await axios.get(`http://localhost:3001/drivers`);
+    const data = await getAllDrivers()
+
     // console.log(data);
 
     const filterData = data.filter((e) => {

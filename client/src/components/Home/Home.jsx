@@ -9,9 +9,6 @@ import { Link } from "react-router-dom"
 import Nav from "../Nav/Nav"
 import Paginacion from "../../Paginacion/Paginacion"
 
-
-
-
 const Home = () => {
 
     const drivers = useSelector((state) => state.drivers)
@@ -62,7 +59,7 @@ const Home = () => {
 
             <div className={style.divCard}>
 
-                {drivers
+                {drivers 
                     ? drivers.slice((pagina - 1) * porPagina, (pagina - 1) * porPagina + porPagina)
                         .map((driver) => {
                             return (
@@ -77,24 +74,11 @@ const Home = () => {
                                 />
                             )
                         })
-                    : window.alert("No hay cartas")
+                    : <p>{""}</p>
                 }
             </div>
             <Paginacion pagina={pagina} setPagina={setPagina} maximo={maximo} setInput={setInput} input={input} />
-            {/* {
-                drivers.map((driver) => {
-                    return (
-                        <CardDriver 
-                        key= {driver.id}
-                        id= {driver.id}
-                        image= {driver.image} 
-                        name= {driver.name}
-                        teams = {driver.teams}
-                        
-                        />
-                        )
-                    }) 
-                } */}
+ 
         </div>
     )
 }
