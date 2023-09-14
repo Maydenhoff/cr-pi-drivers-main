@@ -7,18 +7,16 @@ const getDriverById = async (req, res) => {
   try {
     const { data } = await axios.get(`http://localhost:3001/drivers`);
 
-
     const findData = data.find((e) => {
-      return e.id == idDriver
-      
-    }); 
-    if(findData) {
-
-      return res.status(200).json(findData)
+      return e.id == idDriver;
+    });
+    if (findData) {
+      return res.status(200).json(findData);
     } else {
-      return res.status(200).send("No se encontraron corredores con el id indicado")
+      return res
+        .status(200)
+        .send("No se encontraron corredores con el id indicado");
     }
-
 
     // const driverDataBase = await Driver.findOne({ where: { id: idDriver } })
     //   .then((response) => response.dataValues)
@@ -30,7 +28,7 @@ const getDriverById = async (req, res) => {
     //   .catch((e) => {
     //     return {};
     //   });
-  
+
     // if (name) {
     //   return res.status(200).json({
     //     id: idDriver,
@@ -43,7 +41,6 @@ const getDriverById = async (req, res) => {
     //   });
     // } else {
     //   return res.status(200).send("No existen drivers con este ID")
-    
   } catch (error) {
     res.status(500).send(error.message);
   }

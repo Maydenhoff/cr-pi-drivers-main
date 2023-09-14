@@ -1,11 +1,12 @@
 const axios = require("axios");
-const { Driver } = require("../db");
+const { Driver, Team } = require("../db");
 const { parseTeams } = require("../utils/parseTeams.js")
 
 const getDrivers = async (req, res) => {
   try {
     let drivers = [];
     const { data } = await axios.get("http://localhost:5000/drivers");
+
     for (let i = 0; i < data.length; i++) {
       const driver = {
         id: data[i].id,
@@ -24,8 +25,25 @@ const getDrivers = async (req, res) => {
       }
       drivers.push(driver);
     }
-    const driverDataBase = await Driver.findAll();
+    const driverDataBase = await Driver.findAll({
+      include: { model: Team}
+    }).then((drivers) => {
+      // Procesa los resultados para obtener un array de nombres
+      return drivers.map((driver) => {
+        const teamNames = driver.Teams.map((team) => team.name);
+        return {
+          id:driver.id,
+          name:driver.name,
+          description:driver.description,
+          image:driver.image,
+          nationality: driver.nationality,
+          dob: driver.dob,
+          teams: teamNames, // Aquí está el array de nombres de los equipos
+        }
+      })
+    }) 
 
+    // console.log(JSON.stringify(driverDataBase));
 
     return res.status(200).json([...drivers, ...driverDataBase]);
   } catch (error) {

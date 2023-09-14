@@ -5,13 +5,11 @@ const { parseTeams } = require("../utils/parseTeams");
 const getTeams = async (req, res) => {
   try {
     const { data } = await axios.get("http://localhost:5000/drivers");
-    console.log(data);
     const array = [];
     for (let i = 0; i < data.length; i++) {
       if (data[i].teams) {
         let t = parseTeams(data[i].teams);
         for (let j = 0; j < t.length; j++) {
-          console.log(t[j]);
           await Team.findOrCreate({ where: { name: t[j] } });
 
           if (!array.includes(t[j])) {

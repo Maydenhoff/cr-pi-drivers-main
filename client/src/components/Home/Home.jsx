@@ -5,9 +5,9 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { filterByOrigen, filterByTeams, getDrivers, getTeams, orderAlfabeticamente, orderFechaNacimiento, searchByName } from "../../Redux/action"
 import CardDriver from "../Card/CardDriver"
-import Paginacion from "../Paginacion"
 import { Link } from "react-router-dom"
 import Nav from "../Nav/Nav"
+import Paginacion from "../../Paginacion/Paginacion"
 
 
 
@@ -22,6 +22,7 @@ const Home = () => {
     //paginado
     const [pagina, setPagina] = useState(1)
     const [porPagina, setPorPagina] = useState(9)
+    const [input, setInput] = useState(1)
 
     const maximo = Math.ceil(drivers.length / porPagina)
 
@@ -35,7 +36,6 @@ const Home = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        console.log("acaa", event.target);
         dispatch(searchByName(cards))
 
     }
@@ -55,7 +55,7 @@ const Home = () => {
             <div className={style.div}>
 
                 <SearchBar handleSubmit={handleSubmit} handleChange={handleChange} />
-                <Nav setPagina={setPagina} />
+                <Nav setPagina={setPagina} setInput={setInput} />
 
 
             </div>
@@ -80,7 +80,7 @@ const Home = () => {
                     : window.alert("No hay cartas")
                 }
             </div>
-            <Paginacion pagina={pagina} setPagina={setPagina} maximo={maximo} />
+            <Paginacion pagina={pagina} setPagina={setPagina} maximo={maximo} setInput={setInput} input={input} />
             {/* {
                 drivers.map((driver) => {
                     return (
@@ -95,7 +95,6 @@ const Home = () => {
                         )
                     }) 
                 } */}
-
         </div>
     )
 }

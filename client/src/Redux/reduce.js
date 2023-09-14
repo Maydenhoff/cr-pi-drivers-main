@@ -7,6 +7,7 @@ import {
   GET_TEAMS,
   ORDER_ALFABETICAMENTE,
   ORDER_FECHA_NACIMIENTO,
+  REINICIAR_DETAIL,
   SEARCH_BY_ID,
   SEARCH_BY_NAME,
 } from "./action-type";
@@ -33,7 +34,6 @@ const reduce = (state = initialState, action) => {
         detail: action.payload,
       };
     case SEARCH_BY_NAME:
-      console.log("esto esoy buyscando", action.payload);
       return {
         ...state,
         drivers: action.payload,
@@ -61,7 +61,6 @@ const reduce = (state = initialState, action) => {
               ),
       };
     case ORDER_FECHA_NACIMIENTO:
-      console.log("esto buyscp", action.payload);
       const copyDriversNacimiento = [...state.drivers];
 
       const compararFechasNacimiento = (a, b) => {
@@ -74,7 +73,6 @@ const reduce = (state = initialState, action) => {
           return -1;
         } else return 0;
       };
-      // copyDriversNacimiento.sort(compararFechasNacimiento)
 
       return {
         ...state,
@@ -85,48 +83,43 @@ const reduce = (state = initialState, action) => {
       };
     case FILTER_BY_TEAMS:
       let copyDriver = state.allDrivers;
-      console.log(copyDriver[0].teams);
       let filtrados = copyDriver.filter((e) =>
         e.teams?.includes(action.payload)
       );
-      console.log(filtrados);
+
       return {
         ...state,
         drivers: filtrados,
       };
     case FILTER_BY_ORIGEN:
       let copyDriver2 = state.allDrivers;
-      // console.log(copyDriver2);
-      let fil;
-      console.log(copyDriver2[1].image);
+      let filterCopy;
       if (action.payload === "API") {
-        fil = copyDriver2.filter((e) => typeof e.image !== "string");
-        console.log("aprete api", action.payload);
+        filterCopy = copyDriver2.filter((e) => typeof e.image !== "string");
       } else if (action.payload === "creados") {
-        fil = copyDriver2.filter((e) => typeof e.image !== "object");
-        console.log("aprete creados", action.payload);
-      } else fil = state.allDrivers;
+        filterCopy = copyDriver2.filter((e) => typeof e.image !== "object");
+      } else filterCopy = state.allDrivers;
 
-      console.log(fil);
       return {
         ...state,
-        drivers: fil,
+        drivers: filterCopy,
       };
 
     case CREATE_NEW_DRIVER:
-      
       return {
         ...state,
         drivers: [...state.drivers, action.payload],
         allDrivers: [...state.allDrivers, action.payload],
       };
-      
-      case DELETE_DRIVER: 
+
+    case DELETE_DRIVER:
       return {
+        ...state,
         drivers: action.payload,
-        allDrivers:  action.payload,
-        
-      }
+        allDrivers: action.payload,
+      };
+    case REINICIAR_DETAIL:
+      return { ...state, detail: {} };
     default:
       return { ...state };
   }

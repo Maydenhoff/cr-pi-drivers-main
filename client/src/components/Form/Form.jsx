@@ -2,8 +2,8 @@ import style from "./Form.module.css"
 import { useDispatch, useSelector } from "react-redux"
 import { createNewDriver, getTeams } from "../../Redux/action"
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import validation from "../validation"
+import { Link, useNavigate } from "react-router-dom"
+import { validation, validationSubmit } from "../validation"
 
 const CrearDriver = () => {
     const dispatch = useDispatch()
@@ -33,27 +33,36 @@ const CrearDriver = () => {
 
 
     const handleChange = (event) => {
-        if(event.target.name === "team") {
-            if(!userData.team.includes(event.target.value)) {
-                setUserData({...userData, team: [...userData.team, event.target.value]})
+        if (event.target.name === "team") {
+            if (!userData.team.includes(event.target.value)) {
+                setUserData({ ...userData, team: [...userData.team, event.target.value] })
+                setErrors((prevValue) => {
+                    return { ...prevValue, team: "" }
+                })
             } else {
-                setUserData({...userData, team: userData.team.filter((e)=> e !== event.target.value )})
+                setUserData({ ...userData, team: userData.team.filter((e) => e !== event.target.value) })
+                setErrors((prevValue) => {
+                    return { ...prevValue, team: "Debes elegir al menos una escuderia" }
+                })
             }
-            
         } else {
 
+
             setUserData({ ...userData, [event.target.name]: event.target.value })
-            console.log(event.target.name);
-            // validation(event.target, setErrors)
+
             validation(event.target, setErrors)
-          if(userData.team) {
-            setErrors({...errors, team: ""})
-          } else {
-            setErrors({...errors, team:"Debes elegir al menos una escuderia"})
-          }
-            
         }
-}   
+
+
+
+
+
+        if (userData.team.length) {
+            console.log(userData);
+            setErrors({ ...errors, team: "" })
+        }
+
+    }
 
 
 
@@ -61,20 +70,8 @@ const CrearDriver = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        
-        if (!userData.name.length || !userData.surname.length || !userData.nationality.length || !userData.image.length || !userData.dob.length ) {
-            window.alert("Falta info rey")
-        } else {
-            if (!errors.name.length && !errors.surname.length && !errors.nationality.length && !errors.image.length && !errors.dob.length && !errors.description.length && !errors.team.length) {
-                // window.alert("TODO OK")
-                dispatch(createNewDriver(userData))
-                navigate("/home")
-                return
+        dispatch(createNewDriver(userData, navigate))
 
-            } else {
-                window.alert("Hay errores")
-            }
-        }
     }
 
 
@@ -87,11 +84,14 @@ const CrearDriver = () => {
     return (
 
         <div className={style.divContainer}>
-            {/* <p>{JSON.stringify(errors)}</p> */}
+
             <form className={style.form} onSubmit={handleSubmit} >
+                <Link to="/home">
+                    <button>Home</button>
+                </Link>
 
                 <div className={style.divContainerInfo}>
-<p className={style.p}>¡Crea tu corredor!</p>
+                    <p className={style.p}>¡Crea tu corredor!</p>
                     <label className={style.label}>Nombre:</label>
                     <input className={style.inputField} name="name" onChange={handleChange} />
                     {errors.name.length ? (<p className={style.signupContainer}>{errors.name}</p>) : ""}
@@ -124,7 +124,7 @@ const CrearDriver = () => {
 
                     <label className={style.label}>Descripcion: </label>
                     <br />
-                    <textarea className={style.textarea}name="description" onChange={handleChange}></textarea>
+                    <textarea className={style.textarea} name="description" onChange={handleChange}></textarea>
                     {errors.description.length ? (<p className={style.signupContainer}>{errors.description}</p>) : ""}
 
                     <br />
@@ -132,35 +132,40 @@ const CrearDriver = () => {
                     <label className={style.label}>Escuderías:</label>
                     <br />
                     <select multiple className={style.select} name="team" onChange={handleChange}>
-                    <option disabled selected>Escuderias(podes elegir mas de uno)</option>
+                        <option disabled selected>Escuderias(podes elegir mas de uno)</option>
 
-                        {teams.map((team) => {
+                        {teams?.map((team) => {
                             return (
-                                
+
                                 <option value={team} key={team}>{team}</option>
-                                )
-                            })}
+                            )
+                        })}
                     </select>
 
                     <br />
-                    
-                            {!userData.team.length ? (<p className={style.signupContainer}>Debes elegir al menos una escuderia</p>) : ""}
-                    <p className={style.pTeam}>Escuderias seleccionadas: {userData.team.map((data)=>{
-               
-                        indice=indice+1
-                        if(indice === userData.team.length) {
+
+                    {!userData.team.length ? (<p className={style.signupContainer}>Debes elegir al menos una escuderia</p>) : ""}
+                    <p className={style.pTeam}>Escuderias seleccionadas: {userData.team.map((data) => {
+
+                        indice = indice + 1
+                        if (indice === userData.team.length) {
                             return data
                         } else {
-        
+
                             return data + " / "
                         }
                     })}</p>
 
-                    <button className={style.button} type="submit"  >CREAR</button>
+                    {!errors.name.length || !errors.surname.length || !errors.nationality.length || !errors.image.length || !errors.dob.length || !errors.description.length || !errors.team.length ?
+
+                        <button className={style.button} type="submit"  >CREAR</button>
+
+                        :
+                        null
+                    }
+
                 </div>
             </form>
-            <p className={style.json}>{JSON.stringify(errors)}</p>
-            {/* <p className={style.json}>{JSON.stringify(userData)}</p> */}
 
         </div>
     )

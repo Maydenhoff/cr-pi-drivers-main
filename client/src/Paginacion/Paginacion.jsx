@@ -1,8 +1,9 @@
+import style from "./Paginacion.module.css"
 import { useState } from "react"
 
-const Paginacion = ({pagina, setPagina, maximo}) => {
+const Paginacion = ({pagina, setPagina, maximo, setInput, input}) => {
 
-    const [input, setInput] = useState(1)
+    // const [input, setInput] = useState(1)
 
     const nextPage = ()=> {
         setInput(parseInt(input)+1)
@@ -35,11 +36,11 @@ if(
 
     }
     return (
-       <div>
-        <button disabled={pagina === 1 || pagina <1 } onClick={previousPage}>atras</button>
-        <input onChange={(e) => onChange(e)} onkeyDown={(e) => onkeyDown(e)} name="page" autoComplete="off" value={input}/>
-        <p> de {maximo}</p>
-        <button disabled={pagina === Math.ceil(maximo) || pagina >  Math.ceil(maximo) } onClick={nextPage}>adelante</button>
+       <div className={style.div}>
+        <button className={style.flecha}disabled={pagina === 1 || pagina <1 } onClick={previousPage}>◀</button>
+        <p className={style.span}  name="page" value={input}>{input}</p>
+        <span className={style.span}> de {maximo}</span>
+        <button className={style.flecha} disabled={pagina === Math.ceil(maximo) || pagina >  Math.ceil(maximo) } onClick={nextPage}>▶</button>
        </div>
     )
 }

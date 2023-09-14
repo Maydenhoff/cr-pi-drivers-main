@@ -5,34 +5,31 @@ import { useEffect } from "react"
 import { filterByOrigen, filterByTeams, getTeams, orderAlfabeticamente, orderFechaNacimiento } from "../../Redux/action"
 
 
-const Nav = ({setPagina}) => {
-    // setCards((prevValue) => {
-    //     console.log(prevValue);
-    // })
+const Nav = ({setPagina, setInput}) => {
     const dispatch = useDispatch()
     const teams = useSelector((state) => state.teams)
 
    const handleOrder = (event) => {
         dispatch(orderAlfabeticamente(event.target.value))
-        console.log(setPagina);
         setPagina(1)
-        // console.log(event.target.value);
+        setInput(1)
+
     }
     const handleFechaOrder = (event) => {
         dispatch(orderFechaNacimiento(event.target.value))
         setPagina(1)
+        setInput(1)
     }
     const handleTeam = (event) => {
-        console.log(event.target.value);
         dispatch(filterByTeams(event.target.value))
         setPagina(1)
+        setInput(1)
     }
     
     const handleOrigen = (event) => {
-        console.log(event.target.value);
         dispatch(filterByOrigen(event.target.value))
-        // setPagina(1)
         setPagina(1)
+        setInput(1)
     }
     useEffect(() => {
         dispatch(getTeams())

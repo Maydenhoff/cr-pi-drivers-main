@@ -25,7 +25,10 @@ const dispatch = useDispatch()
                 
                 <h1 className={style.name}>{name}</h1>
                 <Link to={`/driver/${id}`}>
-                    <img className={style.image} src={image.url} alt={image.imageby} />
+                    {typeof id !== "number"
+                    ? <img className={style.image} src={image} alt={name} />
+                :  <img className={style.image} src={image.url} alt={image.imageby} /> }
+                    {/* <img className={style.image} src={image.hasOwnProperty("url") ? image.url : image } alt={image.imageby} /> */}
                 </Link>
                 <h4 className={style.team}>Escuderias: {teams?.map((e) => {
                     indice = indice + 1
