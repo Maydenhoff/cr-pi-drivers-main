@@ -36,6 +36,10 @@ const Home = () => {
         dispatch(searchByName(cards))
 
     }
+    const buscarPorTeams = (event) => {
+        // console.log(event.target.value);
+        dispatch(filterByTeams(event.target.name))
+    }
 
     useEffect(() => {
         dispatch(getTeams())
@@ -78,7 +82,9 @@ const Home = () => {
                 }
             </div>
             <Paginacion pagina={pagina} setPagina={setPagina} maximo={maximo} setInput={setInput} input={input} />
- 
+ <button name={"Prost"} onClick={buscarPorTeams}>{teams.filter((e) => e === "Prost")}</button>
+ <button name={"Minardi"} onClick={buscarPorTeams}>{teams.filter((e) => e === "Minardi")}</button>
+ {/* <button>{console.log(teams)}</button> */}
         </div>
     )
 }

@@ -5,6 +5,7 @@ import {
   FILTER_BY_ORIGEN,
   FILTER_BY_TEAMS,
   GET_DRIVERS,
+  GET_DRIVER_PRUEBA,
   GET_TEAMS,
   ORDER_ALFABETICAMENTE,
   ORDER_FECHA_NACIMIENTO,
@@ -34,16 +35,6 @@ export const createNewDriver = (driver, navigate) => {
         payload: data,
       });
     }
-  };
-};
-export const getDrivers = () => {
-  const endpoint = `${VITE_URL}/drivers`;
-  return async (dispatch) => {
-    const { data } = await axios.get(endpoint);
-    return dispatch({
-      type: GET_DRIVERS,
-      payload: data,
-    });
   };
 };
 
@@ -119,3 +110,29 @@ export const reiniciarDetail = () => {
     type: REINICIAR_DETAIL,
   };
 };
+
+export const getDrivers = () => {
+  const endpoint = `${VITE_URL}/drivers`;
+  return async (dispatch) => {
+    const { data } = await axios.get(endpoint);
+    return dispatch({
+      type: GET_DRIVERS,
+      payload: data,
+    });
+  };
+};
+
+export const getDriverPrueba = () => {
+  return async(dispatch) => {
+ const {data} = await axios.get("http://localhost:3001/drivers")
+ return dispatch({
+  type: GET_DRIVER_PRUEBA,
+  payload: data
+ })
+  }
+  
+  
+  return {
+    type: GET_DRIVER_PRUEBA
+  }
+}
